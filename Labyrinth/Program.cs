@@ -11,6 +11,7 @@ namespace Labyrinth
             Map maze = new Map();
             Player pc = new Player(maze.getRoom(1, 0));
             string input;
+            bool win;
 
             while(true)
             {
@@ -19,7 +20,21 @@ namespace Labyrinth
                 input = ReadLine();
                 pc.MovePlayer(input, maze);
 
+                if(pc.Room.Occupied)
+                {
+                    Monster mon = pc.Room.mon;
+
+                    win = pc.Combat(mon);
+
+                    if(!win)
+                    {
+                        break;
+                    }
+                }
+
             }
+
+            WriteLine("GAME OVER");
        
         }
     }

@@ -9,12 +9,21 @@ namespace Labyrinth
     {
         string name;
         Room room;
+        public int HP = 20; 
 
         public Room Room //lets other classes see what room the player is in
         {
             get
             {
                 return room;
+            }
+        }
+
+        public string Name //lets other classes see what room the player is in
+        {
+            get
+            {
+                return name;
             }
         }
 
@@ -28,6 +37,13 @@ namespace Labyrinth
         {
             name = n;
             room = r;
+        }
+
+        public Player(string n, Room r, int HitPoints)
+        {
+            name = n;
+            room = r;
+            HP = HitPoints;
         }
 
         /// <summary>
@@ -99,6 +115,84 @@ namespace Labyrinth
             {
                 WriteLine("There is no door there");
             }
+        }
+
+        public bool Combat(Monster mon)
+        {
+            bool win;
+            string input;
+
+            Random d6 = new Random();
+            int roll;
+            while (this.HP > 0 && mon.HP > 0)
+            {
+                WriteLine("There is a {0} here attacking you", mon.name);
+                WriteLine("What do you do? (Attack, Dodge, or Block)");
+                input = ReadLine();
+                input = input.ToLower();
+                roll = d6.Next(1, 7);
+                if (input.IndexOf("attack") >= 0)
+                {
+                    mon.HP -= roll;
+                    WriteLine("You attack doing {0} damage", roll);
+                    if (mon.HP > 0)
+                    {
+                        this.HP -= mon.Attack;
+
+                    }
+                }
+                else if (input.IndexOf("dodge") >= 0)
+                {
+
+                    if (roll > 5)
+                    {
+                        WriteLine("You Dodge and do a light strike!");
+                        mon.HP -= d6.Next(1, 3);
+                    }
+                    else if (roll > 2)
+                    {
+                        WriteLine("You Dodge!");
+                    }
+                    else
+                    {
+                        WriteLine("Well you tried to dodge...");
+                        this.HP -= Convert.ToInt32(mon.Attack * 1.5);
+                    }
+                }
+                else if (input.IndexOf("block") >= 0)
+                {
+                    if (roll > 5)
+                    {
+                        WriteLine("You do a great block! Good job!");
+                    }
+                    else
+                    {
+                        WriteLine("You block but it still hurt a little");
+                        this.HP -= mon.Attack / 2;
+                    }
+                }
+                else
+                {
+                    WriteLine("You wave your hands in the air confused");
+                    this.HP -= mon.Attack * 3;
+                }
+
+                WriteLine("The {0} has {1} hp and you have {2} hp left...\n good luck", mon.name, mon.HP, this.HP);
+            }
+
+            if (this.HP < 1)
+            {
+                WriteLine("The {0} killed {1}, ate the corpse, and lived happily ever after", mon.name, this.Name);
+                win = false;
+            }
+            else
+            {
+                WriteLine("You defeated the {0}! You will eat well tonight. \n +1 Gold", mon.name);
+                win = true;
+                Room.Occupied = false;
+            }
+
+            return win;
         }
 
 

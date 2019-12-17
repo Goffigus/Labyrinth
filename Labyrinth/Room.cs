@@ -13,6 +13,9 @@ namespace Labyrinth
         public bool doorWallSouth;
         public bool doorWallWest;
 
+        public bool Occupied;
+        public Monster mon;
+
         public int xCoordinate;
         public int yCoordinate;
 
@@ -25,12 +28,21 @@ namespace Labyrinth
             doorWallEast = false;
             doorWallSouth = false;
             doorWallWest = false;
+            Occupied = false;
         }
 
         public Room(string roomName, string roomDescription)
         {
             name = roomName;
             description = roomDescription;
+            Occupied = false;
+        }
+        public Room(string roomName, string roomDescription, Monster m)
+        {
+            name = roomName;
+            description = roomDescription;
+            mon = m;
+            Occupied = true;
         }
 
         public string Description()

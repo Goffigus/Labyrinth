@@ -7,11 +7,14 @@ namespace Labyrinth
 {
     class Map
     {
+        static Monster dragon = new Monster("Tiny Dragon", 10, 3);
+        static Monster grunt = new Monster();
+
         Room entrance = new Room("Entrance", "This is an ominous room");
-        Room hallway = new Room("The Hall", "The Hall stretches before you, you feel a draft");
+        Room hallway = new Room("The Hall", "The Hall stretches before you, you feel a draft", grunt);
         Room foyer = new Room("Foyer", "There is nothing of intrest here");
         Room bedroom = new Room("Master Bedroom", "The room is messy but the bed looks comfortable");
-        Room closet = new Room("The Closet", "There is a dragon in here");
+        Room closet = new Room("The Closet", "There is a dragon in here", dragon);
 
         Room[,] maze = new Room[3, 3];
 
@@ -82,10 +85,8 @@ namespace Labyrinth
                                 WriteLine("{0} East door unlocked  {1}, {2}", maze[x, y].name, x, y);
                             }
                         }
-
                     }
-                }
-               
+                }              
             }
         }
     }
