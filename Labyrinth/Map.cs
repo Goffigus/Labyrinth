@@ -23,6 +23,10 @@ namespace Labyrinth
             doorSetup();
         }
 
+        public Room getRoom(int x, int y)
+        {
+            return maze[x, y];
+        }
 
         private void doorSetup()
         {
@@ -37,6 +41,8 @@ namespace Labyrinth
                 {
                     if(maze[x,y] != null)
                     {
+                        maze[x, y].xCoordinate = x;
+                        maze[x, y].yCoordinate = y;
                         north = y - 1;
                         east = x + 1;
                         south = y + 1;

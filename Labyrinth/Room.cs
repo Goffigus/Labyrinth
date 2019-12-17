@@ -13,6 +13,9 @@ namespace Labyrinth
         public bool doorWallSouth;
         public bool doorWallWest;
 
+        public int xCoordinate;
+        public int yCoordinate;
+
 
         public Room()
         {
@@ -28,6 +31,11 @@ namespace Labyrinth
         {
             name = roomName;
             description = roomDescription;
+        }
+
+        public string Description()
+        {
+            return description;
         }
     }
 }
